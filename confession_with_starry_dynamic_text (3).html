@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+    <title>浪漫表白</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #000;
+            font-family: 'Inter', sans-serif;
+            overflow: hidden;
+        }
+
+        .stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: starfall 5s linear infinite;
+        }
+
+        @keyframes starfall {
+            from {
+                transform: translateY(-100vh);
+            }
+
+            to {
+                transform: translateY(100vh);
+            }
+        }
+
+        .confession-container {
+            position: relative;
+            z-index: 1;
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .heart {
+            color: red;
+            animation: heartbeat 1.5s ease-in-out infinite both;
+        }
+
+        @keyframes heartbeat {
+            from {
+                transform: scale(1);
+                transform-origin: center center;
+                animation-timing-function: ease-out;
+            }
+
+            10% {
+                transform: scale(0.91);
+                animation-timing-function: ease-in;
+            }
+
+            17% {
+                transform: scale(0.98);
+                animation-timing-function: ease-out;
+            }
+
+            33% {
+                transform: scale(0.87);
+                animation-timing-function: ease-in;
+            }
+
+            45% {
+                transform: scale(1);
+                animation-timing-function: ease-out;
+            }
+        }
+
+        .dynamic-text {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+        }
+
+        .dynamic-text span {
+            position: absolute;
+            font-size: 24px;
+            color: #ff69b4;
+            opacity: 0;
+            animation: fadeInOut 8s linear infinite;
+        }
+
+        @keyframes fadeInOut {
+            0% {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            20% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            80% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+        }
+
+        /* 嘲笑界面样式 */
+       .mock-container {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.5);
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 2rem;
+            border-radius: 1rem;
+            text-align: center;
+            z-index: 2;
+            opacity: 0;
+            animation: mockFadeInScale 0.5s ease-out forwards;
+        }
+
+        @keyframes mockFadeInScale {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.5);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+    </style>
+</head>
+
+<body class="flex flex-col items-center justify-center min-h-screen relative">
+    <!-- 星空背景 -->
+    <div class="stars">
+        <div class="star" style="left: 10%; top: -10%; animation-delay: 0s;"></div>
+        <div class="star" style="left: 20%; top: -20%; animation-delay: 1s;"></div>
+        <div class="star" style="left: 30%; top: -30%; animation-delay: 2s;"></div>
+        <div class="star" style="left: 40%; top: -40%; animation-delay: 3s;"></div>
+        <div class="star" style="left: 50%; top: -50%; animation-delay: 4s;"></div>
+        <div class="star" style="left: 60%; top: -60%; animation-delay: 0.5s;"></div>
+        <div class="star" style="left: 70%; top: -70%; animation-delay: 1.5s;"></div>
+        <div class="star" style="left: 80%; top: -80%; animation-delay: 2.5s;"></div>
+        <div class="star" style="left: 90%; top: -90%; animation-delay: 3.5s;"></div>
+    </div>
+
+    <div class="confession-container p-8 text-center max-w-md">
+        <h1 class="text-5xl font-bold text-white mb-4">亲爱的 唐艺萱</h1>
+        <p class="text-3xl font-bold text-white mb-8">
+            我喜欢你，陪我一生好吗？ <span class="heart"><i class="fa-solid fa-heart"></i></span>
+        </p>
+        <div class="flex justify-center space-x-4">
+            <button id="yesBtn"
+                class="px-6 py-3 bg-white text-pink-600 rounded-md hover:bg-pink-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50 transition-all duration-300">
+                我愿意
+            </button>
+            <button id="noBtn"
+                class="px-6 py-3 bg-white text-pink-600 rounded-md hover:bg-pink-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50 transition-all duration-300">
+                再考虑
+            </button>
+        </div>
+    </div>
+
+    <!-- 动态表白文字 -->
+    <div class="dynamic-text">
+        <span style="animation-delay: 0s">爱你永远✨</span>
+        <span style="animation-delay: 4s">一生相伴💕</span>
+    </div>
+
+    <!-- 嘲笑界面 -->
+    <div class="mock-container" id="mockContainer">
+        <h2 class="text-3xl font-bold text-red-600 mb-4">哈哈，你被整啦！</h2>
+        <p class="text-lg text-gray-700">这么容易就上当啦，太好骗咯😜</p>
+    </div>
+
+    <script>
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const mockContainer = document.getElementById('mockContainer');
+
+        yesBtn.addEventListener('click', function () {
+            // 隐藏表白容器
+            const confessionContainer = document.querySelector('.confession-container');
+            confessionContainer.style.display = 'none';
+
+            // 隐藏动态文字
+            const dynamicText = document.querySelector('.dynamic-text');
+            dynamicText.style.display = 'none';
+
+            // 显示嘲笑界面
+            mockContainer.style.display = 'block';
+        });
+
+        noBtn.addEventListener('mouseover', function () {
+            const maxX = window.innerWidth - noBtn.offsetWidth;
+            const maxY = window.innerHeight - noBtn.offsetHeight;
+            const randomX = Math.floor(Math.random() * maxX);
+            const randomY = Math.floor(Math.random() * maxY);
+            noBtn.style.position = 'absolute';
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
+        });
+    </script>
+</body>
+
+</html>
+    
